@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->
+            $table->foreignId('client_id')->constrained()->restrictOnDelete();
+            $table->foreignId('service_id')->constrained()->restrictOnDelete();
+            $table->string('invoice_number')->unique();
+            $table->date('issue_date');
+            $table->date('due_date');
+            $table->decimal('amount', 10,2);
+            $table->string('status')->default('unpaid');
             $table->timestamps();
         });
     }
