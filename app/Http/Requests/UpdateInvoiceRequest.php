@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class UpdateInvoiceRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'client_id' => ['required', 'exists:clients,id'],
+            'service_id' => ['required', 'exists:services,id'],
+            'invoice_number' => ['required', 'string', 'max:50', Rule::unique('invoices', 'invoice_number')->ignore($this->invoice)],
+            'issue_date' => ['required', 'date'],
+            'due_date' => ['required', 'date', 'after_or_equal:issue_date'],
+            'amount' => ['required', 'numeric', 'min:0'],
+            'status' => ['required', 'in:unpaid,partial,paid'],
+        ];
+    }
+}
