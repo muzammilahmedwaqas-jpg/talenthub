@@ -29,12 +29,12 @@ class DatabaseSeeder extends Seeder
 
         foreach ($invoices as $invoice) {
             if ($invoice->status === 'unpaid') {
-                continue; 
+                continue;
             }
 
             $amount = $invoice->status === 'paid'
-                ? $invoice->amount               
-                : round($invoice->amount / 2, 2); 
+                ? $invoice->amount
+                : round($invoice->amount / 2, 2);
 
             Payment::create([
                 'invoice_id' => $invoice->id,
