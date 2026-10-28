@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Invoice extends Model
 {
@@ -45,4 +46,28 @@ class Invoice extends Model
     {
         return $this->hasMany(Payment::class);
     }
+    
+    protected function totalPaid(): Attribute
+    {
+        return Attribute::get(fn () => round((float) $this->payments->sum('amount'), 2));
+    }
+
+    protected function balance(): Attribute
+    {
+        return Attribute::get(fn () => round((float) $this->amount - $this->total_paid, 2));
+    }
+
+    public function refreshStatus(): void
+    {
+        $this->load('payments');
+
+        $this->status = match (true) {
+            $this->balance <= 0 => 'paid',
+            $this->total_paid > 0 => 'partial',
+            default => 'unpaid',
+        };
+
+        $this->save();
+    }
+
 }
