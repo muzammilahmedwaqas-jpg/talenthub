@@ -156,3 +156,17 @@ resources/views/          Blade views and components (layout, input, status badg
 resources/views/invoices/pdf.blade.php   PDF invoice layout
 routes/web.php            Guest (login) and auth-protected routes
 ```
+
+---
+
+## Hand-over note
+
+**What I did:** I built a Laravel invoicing tool for TalentHub Recruiters over four tasks: the data model with migrations, models and seeders; admin CRUD for clients, services and invoices with form-request validation; login, payment entry with automatic status and PDF invoices; and deployment to Render with Docker plus this README.
+
+**What was hard:** Render has no native PHP runtime, so I had to learn Docker and write a start script that runs migrations and seeding, because the free plan has no console. I also had to fix two production-only problems: Faker was a dev-only package, so seeding failed without it, and Laravel needed to trust Render's proxy to generate https links.
+
+**What I left out:**
+- Permanent data on the live site: the free plan's disk is temporary, so the SQLite database resets to sample data on each restart or deploy.
+- One service per invoice: invoices with several line items would need an extra pivot table.
+- User management, password reset and email sending: there is a single seeded admin account.
+- Automated tests and a dashboard with summary reports.
