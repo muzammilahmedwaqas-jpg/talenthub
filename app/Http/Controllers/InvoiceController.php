@@ -7,6 +7,7 @@ use App\Models\Client;
 use App\Models\Service;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class InvoiceController extends Controller
 {
@@ -86,4 +87,13 @@ class InvoiceController extends Controller
 
         return redirect()->route('invoices.index')->with('success', 'Invoice deleted.');
     }
+
+    public function pdf(Invoice $invoice)
+    {
+    $invoice->load(['client', 'service', 'payments']);
+
+    return Pdf::loadView('invoices.pdf', compact('invoice'))
+        ->download($invoice->invoice_number . '.pdf');
+    }
+
 }

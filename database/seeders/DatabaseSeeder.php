@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\Payment;
@@ -18,6 +19,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+        User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'admin@talenthub.test',
+            'password' => 'password',
+        ]);
+        
         $clients = Client::factory()->count(5)->create();
         $services = Service::factory()->count(5)->create();
 
