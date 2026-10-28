@@ -2,7 +2,7 @@
 
 A Laravel web application for **TalentHub Recruiters**, a boutique recruitment agency that bills client companies for placement services. Staff can manage clients and services, issue invoices, record (partial) payments, see outstanding balances, and download printable PDF invoices.
 
-**Live site:** https://talenthub.onrender.com
+**Live site:** https://talenthub-r303.onrender.com
 
 | Demo login | |
 |---|---|
@@ -108,7 +108,7 @@ The app is deployed with **Docker**, because Render has no native PHP runtime.
 | `APP_ENV` | `production` |
 | `APP_DEBUG` | `false` |
 | `APP_KEY` | output of `php artisan key:generate --show` |
-| `APP_URL` | the Render URL, e.g. `https://talenthub.onrender.com` |
+| `APP_URL` | the Render URL, e.g. `https://talenthub-r303.onrender.com` |
 | `DB_CONNECTION` | `sqlite` |
 | `SESSION_DRIVER` | `database` |
 | `LOG_CHANNEL` | `stderr` |
