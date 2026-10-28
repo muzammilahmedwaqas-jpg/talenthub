@@ -13,11 +13,21 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark mb-4">
     <div class="container">
         <a class="navbar-brand" href="{{ route('clients.index') }}">TalentHub</a>
-        <div class="navbar-nav">
-            <a class="nav-link {{ request()->routeIs('clients.*') ? 'active' : '' }}" href="{{ route('clients.index') }}">Clients</a>
-            <a class="nav-link {{ request()->routeIs('services.*') ? 'active' : '' }}" href="{{ route('services.index') }}">Services</a>
-            <a class="nav-link {{ request()->routeIs('invoices.*') ? 'active' : '' }}" href="{{ route('invoices.index') }}">Invoices</a>
-        </div>
+                @auth
+            <div class="navbar-nav">
+                <a class="nav-link {{ request()->routeIs('clients.*') ? 'active' : '' }}" href="{{ route('clients.index') }}">Clients</a>
+                <a class="nav-link {{ request()->routeIs('services.*') ? 'active' : '' }}" href="{{ route('services.index') }}">Services</a>
+                <a class="nav-link {{ request()->routeIs('invoices.*') ? 'active' : '' }}" href="{{ route('invoices.index') }}">Invoices</a>
+            </div>
+
+            <div class="ms-auto d-flex align-items-center gap-3">
+                <span class="navbar-text">{{ auth()->user()->name }}</span>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-sm btn-outline-light">Log out</button>
+                </form>
+            </div>
+        @endauth
     </div>
 </nav>
 
